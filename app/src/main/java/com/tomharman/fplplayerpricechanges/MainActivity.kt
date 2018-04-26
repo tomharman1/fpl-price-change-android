@@ -3,12 +3,16 @@ package com.tomharman.fplplayerpricechanges
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val playersAdapter = PlayersAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +23,13 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
+        recyclerView.apply {
+            adapter = playersAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+        addSamplePlayers()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -35,5 +46,13 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun addSamplePlayers() {
+        playersAdapter.add(PlayersAdapter.Player(name = "Lacazette"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Henry"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Smith"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Anelka"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Wright"))
     }
 }
