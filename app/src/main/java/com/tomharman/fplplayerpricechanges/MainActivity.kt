@@ -49,10 +49,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addSamplePlayers() {
-        playersAdapter.add(PlayersAdapter.Player(name = "Lacazette"))
-        playersAdapter.add(PlayersAdapter.Player(name = "Henry"))
-        playersAdapter.add(PlayersAdapter.Player(name = "Smith"))
-        playersAdapter.add(PlayersAdapter.Player(name = "Anelka"))
-        playersAdapter.add(PlayersAdapter.Player(name = "Wright"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Lacazette", teamName = "ARS", price = "10m", netTransfers = "100,000", netTransferPercentage = "150%"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Henry", teamName = "ARS", price = "10m", netTransfers = "100,000", netTransferPercentage = "150%"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Smith", teamName = "ARS", price = "10m", netTransfers = "100,000", netTransferPercentage = "150%"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Anelka", teamName = "ARS", price = "10m", netTransfers = "100,000", netTransferPercentage = "150%"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Wright", teamName = "ARS", price = "10m", netTransfers = "100,000", netTransferPercentage = "150%"))
     }
 }

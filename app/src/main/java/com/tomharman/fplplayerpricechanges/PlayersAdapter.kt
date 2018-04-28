@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import kotlinx.android.synthetic.main.layout_player_item.view.*
 
 class PlayersAdapter: RecyclerView.Adapter<PlayersAdapter.PlayerViewHolder>() {
 
@@ -28,12 +28,22 @@ class PlayersAdapter: RecyclerView.Adapter<PlayersAdapter.PlayerViewHolder>() {
 
     class PlayerViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        private val nameTv: TextView = view.findViewById(R.id.playerName)
-
         fun bind(player: Player) {
-            nameTv.text = player.name
+            with(player) {
+                view.playerName.text = name
+                view.teamName.text = teamName
+                view.playerPrice.text = price
+                view.netTransfers.text = netTransfers
+                view.percentageChange.text = netTransferPercentage
+            }
         }
     }
 
-    data class Player(val name: String)
+    data class Player(
+        val name: String,
+        val teamName: String,
+        val price: String,
+        val netTransfers: String,
+        val netTransferPercentage: String
+    )
 }
