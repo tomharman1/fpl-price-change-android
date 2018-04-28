@@ -4,15 +4,25 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-
+import com.tomharman.fplplayerpricechanges.io.IPlayerService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private val playersAdapter = PlayersAdapter()
+
+    val playerService by lazy {
+        IPlayerService.create()
+    }
+
+    val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +39,33 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-        addSamplePlayers()
+        fetchPlayersFromService()
+//        addSamplePlayers()
+    }
+
+    private fun fetchPlayersFromService() {
+        val successObserver = { result: List<IPlayerService.Player> ->
+            Log.i("", "Success: Players loaded")
+            result.forEach { player ->
+                with(player) {
+                    playersAdapter.add(PlayersAdapter.Player(
+                        name = player_name,
+                        teamName = short_team_name,
+                        price =  price_formatted,
+                        netTransfers = net_transfers_in.toString(),
+                        netTransferPercentage = target_percentage_formatted))
+                }
+            }
+        }
+        val errorObserver = { t: Throwable ->
+            Log.e("", "Error:- fetching players", t)
+            Unit
+        }
+        playerService
+            .getPlayers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(successObserver, errorObserver)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
