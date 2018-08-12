@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.tomharman.fplplayerpricechanges.io.IPlayerService
 import com.tomharman.fplplayerpricechanges.io.PlayerServiceInteractor
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,13 +31,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_sort)
 
         recyclerView.apply {
             adapter = playersAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
-        toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_sort)
+        progressBar.visibility = VISIBLE
     }
 
     override fun onResume() {
@@ -83,6 +86,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchPlayersFromService() {
         val successObserver = { result: List<IPlayerService.Player> ->
+            progressBar.visibility = GONE
             Log.i("", "Success: Players loaded")
             result.forEach { player ->
                 with(player) {
