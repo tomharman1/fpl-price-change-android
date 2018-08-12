@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                         netTransferPercentage = target_percentage_formatted))
                 }
             }
+            playersAdapter.notifyDataSetChanged()
         }
         val errorObserver = { t: Throwable ->
             Log.e("", "Error:- fetching players", t)

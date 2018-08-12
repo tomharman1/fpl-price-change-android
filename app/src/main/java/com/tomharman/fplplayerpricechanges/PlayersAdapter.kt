@@ -23,7 +23,6 @@ class PlayersAdapter: RecyclerView.Adapter<PlayersAdapter.PlayerViewHolder>() {
 
     fun add(player: Player) {
         players.add(player)
-        this.notifyItemInserted(players.size - 1)
     }
 
     class PlayerViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
