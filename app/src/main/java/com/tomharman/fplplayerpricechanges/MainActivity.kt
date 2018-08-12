@@ -1,6 +1,7 @@
 package com.tomharman.fplplayerpricechanges
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity() {
             adapter = playersAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
+
+        toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_sort)
     }
 
     override fun onResume() {
@@ -57,7 +60,23 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.sort_net_transfers_in_descending -> {
+                playersAdapter.sort(PlayersAdapter.SortTypeEnum.SORT_TYPE_NTI_DESCENDING)
+                true
+            }
+            R.id.sort_net_transfers_in_ascending -> {
+                playersAdapter.sort(PlayersAdapter.SortTypeEnum.SORT_TYPE_NTI_ASCENDING)
+                true
+            }
+            R.id.sort_percentage_descending -> {
+                playersAdapter.sort(PlayersAdapter.SortTypeEnum.SORT_TYPE_PERCENTAGE_DESCENDING)
+                true
+            }
+            R.id.sort_percentage_ascending -> {
+                playersAdapter.sort(PlayersAdapter.SortTypeEnum.SORT_TYPE_PERCENTAGE_ASCENDING)
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -71,8 +90,10 @@ class MainActivity : AppCompatActivity() {
                         name = player_name,
                         teamName = short_team_name,
                         price =  price_formatted,
-                        netTransfers = net_transfers_in.toString(),
-                        netTransferPercentage = target_percentage_formatted))
+                        netTransfers = net_transfers_in,
+                        netTransfersFormatted = net_transfers_in.toString(),
+                        netTransfersPercentage = target_percentage,
+                        netTransferPercentageFormatted = target_percentage_formatted))
                 }
             }
             playersAdapter.notifyDataSetChanged()
@@ -91,10 +112,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addSamplePlayers() {
-        playersAdapter.add(PlayersAdapter.Player(name = "Lacazette", teamName = "ARS", price = "10m", netTransfers = "100,000", netTransferPercentage = "150%"))
-        playersAdapter.add(PlayersAdapter.Player(name = "Henry", teamName = "ARS", price = "10m", netTransfers = "100,000", netTransferPercentage = "150%"))
-        playersAdapter.add(PlayersAdapter.Player(name = "Smith", teamName = "ARS", price = "10m", netTransfers = "100,000", netTransferPercentage = "150%"))
-        playersAdapter.add(PlayersAdapter.Player(name = "Anelka", teamName = "ARS", price = "10m", netTransfers = "100,000", netTransferPercentage = "150%"))
-        playersAdapter.add(PlayersAdapter.Player(name = "Wright", teamName = "ARS", price = "10m", netTransfers = "100,000", netTransferPercentage = "150%"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Lacazette", teamName = "ARS", price = "10m", netTransfers = 10, netTransfersFormatted = "100,000", netTransfersPercentage = 150.0, netTransferPercentageFormatted = "150%"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Henry", teamName = "ARS", price = "10m", netTransfers = 10, netTransfersFormatted = "100,000", netTransfersPercentage = 150.0, netTransferPercentageFormatted = "150%"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Smith", teamName = "ARS", price = "10m", netTransfers = 10, netTransfersFormatted = "100,000", netTransfersPercentage = 150.0, netTransferPercentageFormatted = "150%"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Anelka", teamName = "ARS", price = "10m", netTransfers = 10, netTransfersFormatted = "100,000", netTransfersPercentage = 150.0, netTransferPercentageFormatted = "150%"))
+        playersAdapter.add(PlayersAdapter.Player(name = "Wright", teamName = "ARS", price = "10m", netTransfers = 10, netTransfersFormatted = "100,000", netTransfersPercentage = 150.0, netTransferPercentageFormatted = "150%"))
     }
 }

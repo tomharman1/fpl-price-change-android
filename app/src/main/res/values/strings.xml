@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">FPL Player Price Changes</string>
-    <string name="action_settings">Settings</string>
 
+    <!-- main menu -->
+    <string name="app_main_menu_nti_sort_descending">NTI Desc</string>
+    <string name="app_main_menu_nti_sort_ascending">NTI Asc</string>
+    <string name="app_main_menu_sort_percentage_descending">% Desc</string>
+    <string name="app_main_menu_sort_percentage_ascending">% Asc</string>
 
+    <!-- table -->
     <string name="table_col_title_player_name">Player name</string>
     <string name="table_col_title_team_name">Team name</string>
     <string name="table_col_title_price">Price</string>
